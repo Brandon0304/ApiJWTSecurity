@@ -1,4 +1,1 @@
-FROM ubuntu:latest
-LABEL authors="ortiz"
-
-ENTRYPOINT ["top", "-b"]
+FROM amazoncorretto:21-alpine-jdk
