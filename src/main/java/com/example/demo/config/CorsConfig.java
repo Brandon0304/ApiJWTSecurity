@@ -11,12 +11,16 @@ public class CorsConfig {
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
         return new WebMvcConfigurer() {
-
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedOrigins("*");
+                        .allowedOrigins(
+                            "https://apijwtsecurity.onrender.com", 
+                            "http://localhost:8080"  // Para desarrollo local
+                        )
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }
