@@ -43,20 +43,22 @@ public class ReqRes {
     }
     
     // Clase interna para representar usuarios sin problemas de serialización
-    @Data
-    public static class UserDTO {
-        private Integer id;
-        private String email;
-        private String name;
-        private String city;
-        private String role;
-        
-        public UserDTO(OurUsers user) {
-            this.id = user.getId();
-            this.email = user.getEmail();
-            this.name = user.getName();
-            this.city = user.getCity();
-            this.role = user.getRole();
-        }
+    // Clase interna para representar usuarios sin problemas de serialización
+@Data
+public static class UserDTO {
+    private Integer id;
+    private String email;
+    private String name;
+    private String city;
+    private String role;
+    private String password; // Añadir este campo
+    
+    public UserDTO(OurUsers user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.city = user.getCity();
+        this.role = user.getRole();
+        this.password = user.getPassword(); // Incluir la contraseña encriptada
     }
 }
