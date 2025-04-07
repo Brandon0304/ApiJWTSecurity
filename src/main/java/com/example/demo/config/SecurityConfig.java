@@ -29,17 +29,28 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        System.out.println("Configurando SecurityFilterChain");
+        
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/public/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/user/**").hasAnyAuthority("USER")
-                        .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN", "USER")
-                        .anyRequest().authenticated())
-                .sessionManagement(manager ->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(request -> {
+                    System.out.println("Configurando reglas de autorización");
+                    request.requestMatchers("/auth/**", "/public/**").permitAll()
+                          .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                          .requestMatchers("/user/**").hasAnyAuthority("USER")
+                          .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN", "USER")
+                          .anyRequest().authenticated();
+                    System.out.println("Reglas de autorización configuradas");
+                })
+                .sessionManagement(manager -> {
+                    System.out.println("Configurando gestión de sesiones");
+                    manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                })
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
                 );
+        
+        System.out.println("SecurityFilterChain configurado correctamente");
         return httpSecurity.build();
     }
     @Bean
