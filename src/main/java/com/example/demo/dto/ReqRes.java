@@ -60,5 +60,6 @@ public static class UserDTO {
         this.city = user.getCity();
         this.role = user.getRole();
         this.password = user.getPassword(); // Incluir la contraseña encriptada
+        }
     }
 }
