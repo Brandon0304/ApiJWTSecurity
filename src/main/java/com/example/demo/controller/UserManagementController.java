@@ -31,9 +31,18 @@ public class UserManagementController {
     }
 
     @GetMapping("/admin/get-all-users")
-    public ResponseEntity<ReqRes> getAllUsers() {
-        return ResponseEntity.ok(usersManagementService.getAllUsers());
+public ResponseEntity<ReqRes> getAllUsers() {
+    System.out.println("Ejecutando endpoint /admin/get-all-users");
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    System.out.println("Autenticación actual: " + auth);
+    if (auth != null) {
+        System.out.println("Roles: " + auth.getAuthorities());
+        System.out.println("Principal: " + auth.getPrincipal());
+    } else {
+        System.out.println("No hay autenticación en el contexto de seguridad");
     }
+    return ResponseEntity.ok(usersManagementService.getAllUsers());
+}
 
     @GetMapping("/admin/get-users/{userId}")
     public ResponseEntity<ReqRes> getUserById(@PathVariable Integer userId) {
